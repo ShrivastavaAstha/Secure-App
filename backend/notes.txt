@@ -1,0 +1,29 @@
+----------------------------------------COOKIES-----------------------------------------
+1.Cookies are small files of information that a web server generates and sends to a web browser.
+2.Web browsers store the cookies they receive for a predetermined period of time, or for the length of a user's session on a website.
+3.They attach the relevant cookies to any future requests the user makes of the web server.
+4.Cookies help in authenticating whether the user is logged in or not.
+5.Cookies not only authenticate but also stores the details about the current user because using these details
+from the cookies, the backend server send the respective data.
+
+----------------------------------------MIDDLEWARE--------------------------------------
+1.A middleware is a function which runs in between the request and response.
+2.This middleware function contains three arguments which are request and response objects, along with next argument.
+3.Next argument is responsible for further processing of response operation.
+
+----------------------------------------DATE SETTING------------------------------------
+1.To get current date we type command:
+const currDate = new Date();
+console.log(currDate);
+2.To get only the date:
+console.log(currDate.getDate());
+3.To increase the date by one:
+console.log(currDate.getDate() + 1);
+4.To set the date to assigned value:
+console.log(currDate.setDate(24));
+
+-----------------------------------------PayLoad------------------------------------------
+PayLoad is the details of user from which the cookie is generated.
+While verifying we can decode the details of the user who generated cookie.
+
+
