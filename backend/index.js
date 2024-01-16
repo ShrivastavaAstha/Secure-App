@@ -3,6 +3,8 @@ const app = express();
 app.use(express.json());
 const cookies = require("cookie-parser");
 app.use(cookies());
+const { connectDatabase } = require("./connection/connect");
+const accountmodel = require("./models/accountdata");
 const verifyToken = require("./tokens/verifyToken");
 const generateToken = require("./tokens/generateToken");
 
@@ -74,7 +76,26 @@ app.get("/chats", middleware, (req, res) => {
     res.status(400).json({ success: false, error: error.message });
   }
 });
+
+app.post("/api/addaccount", async (req, res) => {
+  try {
+    const obj = {
+      username: req.body.username,
+      contact: req.body.contact,
+      email: req.body.email,
+      password: req.body.password,
+    };
+    console.log(obj);
+    const accountdata = new accountmodel(obj);
+    await accountdata.save();
+    return res.status(200).json({ success: true, message: "Data Saved" });
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error.message });
+  }
+});
+
 const PORT = 8000;
+connectDatabase();
 app.listen(PORT, async () => {
   await console.log(`Server is running at Port ${PORT}`);
 });

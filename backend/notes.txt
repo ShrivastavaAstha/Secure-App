@@ -22,8 +22,8 @@ console.log(currDate.getDate() + 1);
 4.To set the date to assigned value:
 console.log(currDate.setDate(24));
 
------------------------------------------PayLoad------------------------------------------
+-----------------------------------------PayLoad-----------------------------------------
 PayLoad is the details of user from which the cookie is generated.
 While verifying we can decode the details of the user who generated cookie.
 
-
+ 
