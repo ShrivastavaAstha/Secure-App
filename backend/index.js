@@ -17,6 +17,34 @@ app.get("/public", (req, res) => {
   }
 });
 
+app.post("/api/addsignup", async (req, res) => {
+  try {
+    const { email, username } = req.body;
+    const userEmailExist = await signupmodel.findOne({ email, username });
+    const userNameExist = await signupmodel.findOne({ username });
+    if (userEmailExist) {
+      return res.json({ message: "Email already Exist" });
+    } else if (userNameExist) {
+      return res.json({ message: "Username already Exist" });
+    }
+    const obj = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    };
+    console.log(obj);
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email)) {
+      const signupdata = new signupmodel(obj);
+      await signupdata.save();
+      return res.status(200).json({ success: true, message: "Data Saved" });
+    } else {
+      return res.status(400).json({ success: false, message: "Invalid email" });
+    }
+  } catch (error) {
+    return res.status(400).json({ success: false, error: error.message });
+  }
+});
+
 app.post("/login", async (req, res) => {
   try {
     let userid = req.body.email;
@@ -79,34 +107,6 @@ app.get("/chats", middleware, (req, res) => {
     // else return res.status(400).json({ success: false, error: "UNAUTHORISED" });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
-  }
-});
-
-app.post("/api/addsignup", async (req, res) => {
-  try {
-    const { email, username } = req.body;
-    const userEmailExist = await signupmodel.findOne({ email, username });
-    const userNameExist = await signupmodel.findOne({ username });
-    if (userEmailExist) {
-      return res.json({ message: "Email already Exist" });
-    } else if (userNameExist) {
-      return res.json({ message: "Username already Exist" });
-    }
-    const obj = {
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-    };
-    console.log(obj);
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(req.body.email)) {
-      const signupdata = new signupmodel(obj);
-      await signupdata.save();
-      return res.status(200).json({ success: true, message: "Data Saved" });
-    } else {
-      return res.status(400).json({ success: false, message: "Invalid email" });
-    }
-  } catch (error) {
-    return res.status(400).json({ success: false, error: error.message });
   }
 });
 
